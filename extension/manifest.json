@@ -1,5 +1,5 @@
 {
- "manifest_version": 3,
+ "manifest_version": 2,
  "name": "TODO",
  "description": "TODO",
  "version": "1.0.0",
@@ -11,9 +11,15 @@
     "exclude_globs": [ "*options*"]
   }
 ],
+"background": {
+  "scripts": [
+    "bgScript.js"
+  ]
+},
 "options_ui": {
   "page": "options.html",
   "open_in_tab": false
 },
- "permissions": ["activeTab", "storage"]
+ "permissions": ["activeTab", "storage", "cookies", "storage", "tabs","http://*/*",
+     "https://*/*"]
 }
