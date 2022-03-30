@@ -51,6 +51,13 @@ function replaceStart() {
 
   }
 
+  chrome.runtime.sendMessage({ command: "GetCookies"},
+      function(response) {
+            console.log("I received cookies!")
+            console.log(response)
+      }
+  );
+
   chrome.storage.sync.set({
         keys: ["certificate"],
         values: ["mommy"]
@@ -67,5 +74,5 @@ function replaceStart() {
           values = result.values
       }
       console.log('Loading Torque');
-      });
+    });
 }
