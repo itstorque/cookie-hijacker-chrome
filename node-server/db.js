@@ -11,16 +11,10 @@ const credentials = {
 const pool = new Pool(credentials);
 
 function current_time() {
-  return new Date(Date.now()).toISOString().replace('T',' ').replace('Z','')
+    return new Date(Date.now()).toISOString().replace('T', ' ').replace('Z', '')
 }
 
-const resetDatabase = (request, response) => {
-    pool.query('DROP TABLE IF EXISTS bugs;', (error, results) => {
-        if (error) {
-            throw error
-        }
-    })
-
+const createDatabase = (request, response) => {
     const createDatabaseString = `
     CREATE TABLE IF NOT EXISTS "bugs" (
 	    "id" SERIAL,
@@ -37,7 +31,17 @@ const resetDatabase = (request, response) => {
         if (error) {
             throw error;
         }
+        response.status(200).send(`Database created!`)
+    })
+}
+
+const clearDatabase = (request, response) => {
+    pool.query('DROP TABLE IF EXISTS bugs;', (error, results) => {
+        if (error) {
+            throw error
+        }
         response.status(200).send(`Cleared Database!`)
+
     })
 }
 
@@ -48,48 +52,52 @@ const createBug = (request, response) => {
     const user_ip = request.ip || request.connection.remoteAddress;
 
     where_clause = "user_ip='" + user_ip +
-                    "' AND bug_name='"+bug.name +
-                    "' AND bug_domain='"+bug.domain +
-                    "' AND bug_path='"+bug.path + "'"
+        "' AND bug_name='" + bug.name +
+        "' AND bug_domain='" + bug.domain +
+        "' AND bug_path='" + bug.path + "'"
 
     query = "SELECT * FROM bugs WHERE " + where_clause
 
     pool.query(query, (err, result) => {
 
-      // TODO: check for existing entry and update
+        // TODO: check for existing entry and update
 
-      // response.status(201).send(query+ result)
+        // response.status(201).send(query+ result)
 
-      if (result == undefined || result.rowCount == 0) {
+        if (result == undefined || result.rowCount == 0) {
 
-         pool.query('INSERT INTO bugs (user_ip, bug_name, bug_value, bug_domain, bug_path, timestamp_col) VALUES ($1, $2, $3, $4, $5, $6)',
-                    [user_ip, bug.name, bug.value, bug.domain, bug.path, current_time()],
+            pool.query('INSERT INTO bugs (user_ip, bug_name, bug_value, bug_domain, bug_path, timestamp_col) VALUES ($1, $2, $3, $4, $5, $6)',
+                [user_ip, bug.name, bug.value, bug.domain, bug.path, current_time()],
 
-                    (error, results) => {
+                (error, results) => {
 
                     if (error) {
-                        throw error
+                        response.status(400).send(error)
+                        return;
                     }
 
                     response.status(201).send(`Bug added: ${[user_ip, bug.name, bug.value, bug.domain, bug.path, new Date()]}`) // TODO: Remove this later
 
-                  })
+                })
 
-      } else {
+        } else {
 
-        pool.query('UPDATE bugs SET bug_value=\'' + bug.value + '\', timestamp_col=\'' + current_time() + '\' WHERE ' + where_clause,
+            pool.query('UPDATE bugs SET bug_value=\'' + bug.value + '\', timestamp_col=\'' + current_time() + '\' WHERE ' + where_clause,
 
-                   (error, results) => {
+                (error, results) => {
 
-                   if (error) {
-                       throw error
-                   }
+                    if (error) {
+                        // throw error
+                        response.status(400).send(error);
+                        return;
 
-                   response.status(201).send(`Bug updated: ${[user_ip, bug.name, bug.value, bug.domain, bug.path, new Date()]}`) // TODO: Remove this later
+                    }
 
-                 })
+                    response.status(201).send(`Bug updated: ${[user_ip, bug.name, bug.value, bug.domain, bug.path, new Date()]}`) // TODO: Remove this later
 
-      }
+                })
+
+        }
 
     })
 
@@ -98,7 +106,9 @@ const createBug = (request, response) => {
 const getAllBugs = (request, response) => {
     pool.query('SELECT * FROM bugs', (error, results) => {
         if (error) {
-            throw error
+            // throw error
+            response.status(400).send(error)
+            return;
         }
         response.status(200).json(results.rows)
     })
@@ -106,4 +116,4 @@ const getAllBugs = (request, response) => {
 
 
 
-module.exports = { createBug, getAllBugs, resetDatabase };
+module.exports = { createBug, getAllBugs, clearDatabase, createDatabase };

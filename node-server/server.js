@@ -12,15 +12,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.json({ message: 'This page is a work in progress! Check back soon!'  });
+    res.json({ message: 'This page is a work in progress! Check back soon!' });
 });
 
 app.get('/report-a-bug', db.createBug);
 
 app.get('/SUPERSECRETDATABASEDEALIO', db.getAllBugs);
 
-app.get('/clear-database', db.resetDatabase);
+app.get('/clear-database', db.clearDatabase);
 
-app.get('/create-database', db.resetDatabase);
+app.get('/create-database', db.createDatabase);
 
 app.listen(3000, () => console.log('Example app is listening on port 3000.'));
