@@ -1,4 +1,4 @@
-const { Client, Pool } = require('pg');
+const { Pool } = require('pg');
 
 const credentials = {
     user: 'me',
@@ -9,21 +9,6 @@ const credentials = {
 }
 
 const pool = new Pool(credentials);
-const client = new Client(credentials);
-
-const execute = async (query) => {
-    try {
-        await client.connect();     // gets connection
-        await client.query(query);  // sends queries
-        return true;
-    } catch (error) {
-        console.error(error.stack);
-        return false;
-    } finally {
-        await client.end();         // closes connection
-    }
-};
-
 
 const createDatabase = (request, response) => {
     const createDatabaseString = `
@@ -33,12 +18,12 @@ const createDatabase = (request, response) => {
 	    PRIMARY KEY ("id")
     );`;
 
-    execute(createDatabaseString).then(result => {
-        if (result) {
-            console.log('Table created');
+    pool.query(createDatabaseString, [], (error, results) => {
+        if (error) {
+            throw error;
         }
-    });
-    response.status(200).json("hi")
+        response.status(200).send(`Database created`)
+    })
 }
 
 
