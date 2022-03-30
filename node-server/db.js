@@ -21,7 +21,7 @@ const resetDatabase = (request, response) => {
     CREATE TABLE IF NOT EXISTS "bugs" (
 	    "id" SERIAL,
         "timestamp_col" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	    "bug" VARCHAR(100) NOT NULL,
+	    "bug" TEXT NOT NULL,
 	    PRIMARY KEY ("id")
     );`;
 
@@ -34,7 +34,8 @@ const resetDatabase = (request, response) => {
 }
 
 const createBug = (request, response) => {
-    const bug = request.params.bug;
+    // response.status(201).send(`Bug added: ${request.query.bug}`)
+    const bug = request.query.bug;
     pool.query('INSERT INTO bugs (bug, timestamp_col) VALUES ($1, $2)', [bug, new Date()], (error, results) => {
         if (error) {
             throw error

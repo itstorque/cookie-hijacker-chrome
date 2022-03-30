@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.json({ message: 'This page is a work in progress! Check back soon!' });
 });
 
-app.get('/report-a-bug/:bug', db.createBug);
+app.get('/report-a-bug', db.createBug);
 
 app.get('/SUPERSECRETDATABASEDEALIO', db.getAllBugs);
 
