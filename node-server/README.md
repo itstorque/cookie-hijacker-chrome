@@ -13,7 +13,7 @@ You'll have to make a database called `api`. Hopefully you followed the instruct
 
 To set up a table in the database, navigate to `localhost:3000/create-database`
 
-to see the contents of the table go to `localhost:3000/create-database`
+to reset the contents of the table go to `localhost:3000/reset-database`
 
 To add strings to table, go to `localhost:3000/report-a-bug/{string-to-add-to-db}`
 
