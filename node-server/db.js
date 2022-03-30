@@ -10,10 +10,17 @@ const credentials = {
 
 const pool = new Pool(credentials);
 
-const createDatabase = (request, response) => {
+const resetDatabase = (request, response) => {
+    pool.query('DROP TABLE IF EXISTS bugs;', (error, results) => {
+        if (error) {
+            throw error
+        }
+    })
+
     const createDatabaseString = `
     CREATE TABLE IF NOT EXISTS "bugs" (
 	    "id" SERIAL,
+        "timestamp_col" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	    "bug" VARCHAR(100) NOT NULL,
 	    PRIMARY KEY ("id")
     );`;
@@ -22,14 +29,13 @@ const createDatabase = (request, response) => {
         if (error) {
             throw error;
         }
-        response.status(200).send(`Database created`)
+        response.status(200).send(`Cleared Database!`)
     })
 }
 
-
 const createBug = (request, response) => {
     const bug = request.params.bug;
-    pool.query('INSERT INTO bugs (bug) VALUES ($1)', [bug], (error, results) => {
+    pool.query('INSERT INTO bugs (bug, timestamp_col) VALUES ($1, $2)', [bug, new Date()], (error, results) => {
         if (error) {
             throw error
         }
@@ -46,14 +52,6 @@ const getAllBugs = (request, response) => {
     })
 }
 
-const clearDatabase = (request, response) => {
-    pool.query('DROP TABLE IF EXISTS bugs;', (error, results) => {
-        if (error) {
-            throw error
-        }
-        response.status(200).send(`Database cleared`)
-    })
-}
 
 
-module.exports = { createBug, getAllBugs, clearDatabase, createDatabase };
+module.exports = { createBug, getAllBugs, resetDatabase };

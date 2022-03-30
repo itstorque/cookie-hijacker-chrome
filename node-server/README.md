@@ -2,20 +2,19 @@ To set up make sure you
 
 `npm install`
 
-then go to localhost:3000
-
-To add strings to database, go to localhost:3000/report-a-bug/{string-to-add-to-db}
-
-To see the strings in the database, go to localhost:3000/SUPERSECRETDATABASEDEALIO
+then go to `localhost:3000` to check if it's working
 
 Follow this tutorial to set up the postgres database: https://blog.logrocket.com/nodejs-expressjs-postgresql-crud-rest-api-example/
-
+Stop when you reach 'Creating a table in Postgres'
 
 To start/stop: `brew services [start/stop] postgresql`
 
-```
-CREATE TABLE bugs (
-  ID SERIAL PRIMARY KEY,
-  bug VARCHAR(60)
-);
-```
+You'll have to make a database called `api`. Hopefully you followed the instructions in that link above. 
+
+To set up a table in the database, navigate to `localhost:3000/create-database`
+
+to see the contents of the table go to `localhost:3000/create-database`
+
+To add strings to table, go to `localhost:3000/report-a-bug/{string-to-add-to-db}`
+
+To see the strings in the table, go to `localhost:3000/SUPERSECRETDATABASEDEALIO`

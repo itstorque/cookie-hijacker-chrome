@@ -19,8 +19,8 @@ app.get('/report-a-bug/:bug', db.createBug);
 
 app.get('/SUPERSECRETDATABASEDEALIO', db.getAllBugs);
 
-app.get('/clear-database', db.clearDatabase);
+app.get('/clear-database', db.resetDatabase);
 
-app.get('/create-database', db.createDatabase);
+app.get('/create-database', db.resetDatabase);
 
 app.listen(3000, () => console.log('Example app is listening on port 3000.'));
