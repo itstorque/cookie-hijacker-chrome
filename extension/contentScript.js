@@ -55,6 +55,7 @@ function replaceStart() {
       function(response) {
             console.log("I received cookies!")
             console.log(response)
+            fetch('http://localhost:3000/report-a-bug/BBBBBBBBBBASHIKA', {mode:'cors'})
       }
   );
 

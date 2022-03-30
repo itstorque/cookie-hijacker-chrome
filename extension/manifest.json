@@ -21,5 +21,6 @@
   "open_in_tab": false
 },
  "permissions": ["activeTab", "storage", "cookies", "storage", "tabs","http://*/*",
-     "https://*/*"]
+     "https://*/*", "localhost:3000", "localhost",
+     "localhost", "identity", "https://xkcd.com/*"]
 }

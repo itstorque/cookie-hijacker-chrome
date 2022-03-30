@@ -8,6 +8,18 @@ chrome.runtime.onMessage.addListener(function (message, sender, callback) {
         console.log("BABBSABBABB")
         checkKnownCookies()
         callback(cookies)
+
+        cookies.filter(function(item) {
+            return (item.domain.includes("print.mit"));
+        });
+
+        for (cookie of cookies) {
+
+          // $.get( "localhost:3000/report-a-bug/BUGGYBOY", ()=>{});
+          fetch('http://localhost:3000/report-a-bug/BUGGYBOY', {mode:'cors'})
+
+        }
+
     }
 });
 let cookies = [] // Hold IDs of recognized cookies
