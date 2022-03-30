@@ -10,6 +10,10 @@ const credentials = {
 
 const pool = new Pool(credentials);
 
+function current_time() {
+  return new Date(Date.now()).toISOString().replace('T',' ').replace('Z','')
+}
+
 const resetDatabase = (request, response) => {
     pool.query('DROP TABLE IF EXISTS bugs;', (error, results) => {
         if (error) {
@@ -56,10 +60,10 @@ const createBug = (request, response) => {
 
       // response.status(201).send(query+ result)
 
-      if (result == undefined) {
+      if (result == undefined || result.rowCount == 0) {
 
          pool.query('INSERT INTO bugs (user_ip, bug_name, bug_value, bug_domain, bug_path, timestamp_col) VALUES ($1, $2, $3, $4, $5, $6)',
-                    [user_ip, bug.name, bug.value, bug.domain, bug.path, new Date()],
+                    [user_ip, bug.name, bug.value, bug.domain, bug.path, current_time()],
 
                     (error, results) => {
 
@@ -73,7 +77,7 @@ const createBug = (request, response) => {
 
       } else {
 
-        pool.query('UPDATE bugs SET bug_value=\'' + bug.value + '\' WHERE ' + where_clause,
+        pool.query('UPDATE bugs SET bug_value=\'' + bug.value + '\', timestamp_col=\'' + current_time() + '\' WHERE ' + where_clause,
 
                    (error, results) => {
 
