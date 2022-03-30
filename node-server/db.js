@@ -13,7 +13,7 @@ const createBug = (request, response) => {
         if (error) {
             throw error
         }
-        response.status(201).send(`Bug added: ${bug}`)
+        response.status(201).send(`Bug added: ${bug}`) // TODO: Remove this later
     })
 }
 
