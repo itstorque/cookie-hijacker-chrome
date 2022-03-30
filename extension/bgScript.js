@@ -1,10 +1,7 @@
-console.log("BG SCRIPT")
-
-// dont mind me stealing some code mmmm
-// https://stackoverflow.com/questions/50771902/chrome-cookies-getall-returns-an-empty-array
 chrome.runtime.onMessage.addListener(function (message, sender, callback) {
+
     if (message.command === 'GetCookies') {
-      
+
         checkKnownCookies()
         callback(cookies)
 
@@ -20,17 +17,24 @@ chrome.runtime.onMessage.addListener(function (message, sender, callback) {
         // }
 
     }
+
 });
+
 let cookies = [] // Hold IDs of recognized cookies
+
 function checkKnownCookies() {
-    chrome.cookies.getAll({
-    }, function (theCookies) {
+
+    chrome.cookies.getAll({}, function (theCookies) {
+
         cookies = theCookies.filter(function(item) {
             return (item.domain.includes("print.mit"));
         });
+
         console.log(cookies)
-        callback(theCookies)
+        callback(cookies)
+
     });
+
 }
 
 // TODO: fix this sketchy thing later

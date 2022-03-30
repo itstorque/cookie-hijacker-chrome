@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.json({ message: 'This page is a work in progress! Check back soon!' });
+    res.json({ message: 'This page is a work in progress! Check back soon!'  });
 });
 
 app.get('/report-a-bug', db.createBug);

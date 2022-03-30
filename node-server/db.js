@@ -20,7 +20,8 @@ const resetDatabase = (request, response) => {
     const createDatabaseString = `
     CREATE TABLE IF NOT EXISTS "bugs" (
 	    "id" SERIAL,
-        "timestamp_col" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      "timestamp_col" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      "user_ip" VARCHAR(30),
 	    "bug" TEXT NOT NULL,
 	    PRIMARY KEY ("id")
     );`;
@@ -36,12 +37,28 @@ const resetDatabase = (request, response) => {
 const createBug = (request, response) => {
     // response.status(201).send(`Bug added: ${request.query.bug}`)
     const bug = request.query.bug;
-    pool.query('INSERT INTO bugs (bug, timestamp_col) VALUES ($1, $2)', [bug, new Date()], (error, results) => {
-        if (error) {
-            throw error
-        }
-        response.status(201).send(`Bug added: ${bug}`) // TODO: Remove this later
+
+    const user_ip = req.ip || req.connection.remoteAddress;
+
+
+    sql.query("SELECT * FROM `bugs` WHERE `user_ip`= " + user_ip "", () => {
+
+      // TODO: check for existing entry and update
+
     })
+
+    pool.query('INSERT INTO bugs (bug, timestamp_col, user_ip) VALUES ($1, $2, $3)',
+                [bug, new Date(), user_ip],
+
+                (error, results) => {
+
+                if (error) {
+                    throw error
+                }
+                response.status(201).send(`Bug added: ${bug}`) // TODO: Remove this later
+
+              })
+
 }
 
 const getAllBugs = (request, response) => {
