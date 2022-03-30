@@ -1,0 +1,19 @@
+{
+ "manifest_version": 3,
+ "name": "TODO",
+ "description": "TODO",
+ "version": "1.0.0",
+ "author": "Torque (Tareq) El Dandachi",
+ "content_scripts": [
+  {
+    "matches": ["<all_urls>"],
+    "js": ["contentScript.js", "jquery.min.js"],
+    "exclude_globs": [ "*options*"]
+  }
+],
+"options_ui": {
+  "page": "options.html",
+  "open_in_tab": false
+},
+ "permissions": ["activeTab", "storage"]
+}
