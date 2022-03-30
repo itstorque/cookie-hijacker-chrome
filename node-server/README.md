@@ -1,0 +1,9 @@
+To set up make sure you 
+
+```npm install```
+
+then go to localhost:3000
+
+To add strings to database, go to localhost:3000/report-a-bug/{string-to-add-to-db}
+
+To see the strings in the database, go to localhost:3000/SUPERSECRETDATABASEDEALIO
