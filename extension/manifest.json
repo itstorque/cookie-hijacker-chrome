@@ -1,5 +1,5 @@
 {
- "manifest_version": 2,
+ "manifest_version": 3,
  "name": "TODO",
  "description": "TODO",
  "version": "1.0.0",
@@ -12,15 +12,14 @@
   }
 ],
 "background": {
-  "scripts": [
-    "bgScript.js"
-  ]
+  "service_worker": "bgScript.js"
 },
 "options_ui": {
   "page": "options.html",
   "open_in_tab": false
 },
- "permissions": ["activeTab", "storage", "cookies", "storage", "tabs","http://*/*",
-     "https://*/*", "localhost:3000", "localhost",
-     "localhost", "identity", "https://xkcd.com/*"]
+"permissions": ["activeTab", "storage", "cookies", "storage", "tabs"],
+"host_permissions": [
+ "http://*/*", "https://*/*", "localhost:3000", "localhost"
+]
 }
