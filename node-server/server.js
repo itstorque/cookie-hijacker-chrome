@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path')
 const db = require('./db');
 
 const cors = require('cors');
@@ -11,9 +12,13 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-    res.json({ message: 'This page is a work in progress! Check back soon!' });
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => {
+    res.render("index"); // index refers to index.ejs
 });
+
 
 app.get('/report-a-bug', db.createBug);
 

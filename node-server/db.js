@@ -10,27 +10,17 @@ const credentials = {
 
 const pool = new Pool(credentials);
 
-const current_time = () => {
-  return new Date(Date.now()).toISOString().replace('T',' ').replace('Z','')
-}
-
-const steal_cookie = (name, path, value) => {
-  return "document.cookie = \"" + name+ '=' + value + "; path="+path + "\""
+function current_time() {
+    return new Date(Date.now()).toISOString().replace('T', ' ').replace('Z', '')
 }
 
 const createDatabase = (request, response) => {
-    pool.query('DROP TABLE IF EXISTS bugs;', (error, results) => {
-        if (error) {
-            throw error
-        }
-    })
-
-  const createDatabaseString = `
+    const createDatabaseString = `
     CREATE TABLE IF NOT EXISTS "bugs" (
 	    "id" SERIAL,
       "timestamp_col" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       "user_ip" VARCHAR(30),
-	    "bug_name" VARCHAR(500) NOT NULL,
+	    "bug_name" VARCHAR(100) NOT NULL,
       "bug_value" TEXT NOT NULL,
       "bug_domain" VARCHAR(500) NOT NULL,
       "bug_path" VARCHAR(100) NOT NULL,
