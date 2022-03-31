@@ -149,16 +149,7 @@ const getAllBugsTable = (request, response) => {
 
         tabled[0][tabled[0].length - 1] = "script"
 
-        // htmltable = "<table><tr>" +
-          // tabled.join('</tr><tr>') +
-        htmltable = tabled.join('<br/><br/>')
-          // "</tr></table>"
-
-        console.log(htmltable)
-
-        response.status(200).send(
-          htmltable
-        )
+        response.render("table", { tabled: tabled });
 
     })
 }
