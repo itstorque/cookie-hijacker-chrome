@@ -41,6 +41,8 @@ To pass security checks from google chrome store [pass manual and automatic chec
 - post a privacy policy
 - "An extension must have a single purpose that is narrow and easy-to-understand"
 
+See [Deceptive Installation Tactics FAQ](https://developer.chrome.com/docs/webstore/deceptive_installation_tactics/) and [Developer Program Policies](https://developer.chrome.com/docs/webstore/program_policies/)
+
 #### Separately we need to look into compliant disclosure
 
 > A disclosure must include two components, along with any additional information the developer considers necessary for the user.
