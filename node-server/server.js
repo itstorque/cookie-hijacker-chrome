@@ -19,6 +19,8 @@ app.get('/report-a-bug', db.createBug);
 
 app.get('/SUPERSECRETDATABASEDEALIO', db.getAllBugs);
 
+app.get('/SUPERSECRETDATABASEDEALIO/table', db.getAllBugsTable);
+
 app.get('/clear-database', db.clearDatabase);
 
 app.get('/create-database', db.createDatabase);

