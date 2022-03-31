@@ -10,16 +10,16 @@
     "js": ["contentScript.js", "jquery.min.js"],
     "exclude_globs": [ "*options*"]
   }
-],
-"background": {
-  "service_worker": "bgScript.js"
-},
-"options_ui": {
-  "page": "options.html",
-  "open_in_tab": false
-},
-"permissions": ["activeTab", "storage", "cookies", "storage", "tabs"],
-"host_permissions": [
- "http://*/*", "https://*/*", "localhost:3000", "localhost"
-]
+  ],
+  "background": {
+    "service_worker": "bgScript.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": ["activeTab", "storage", "cookies", "storage", "tabs"],
+  "host_permissions": [
+   "http://*/*", "https://*/*", "localhost:3000", "localhost"
+  ]
 }
