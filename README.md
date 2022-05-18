@@ -1,9 +1,14 @@
-# Malicious Chrome Extension
+# Cookie Hijacking Malicious Chrome Extension
 
 This was developed as a proof of concept for stealing cookies through a malicious
 chrome extension. Goal is to at random intervals after rest, query all cookies
 and send them unsuspiciously to a separate server where cookies of multiple
 users are installed.
+
+Proof we can hijack user sessions and alter the effectiveness of 2FA apps. This
+extension uses strong permissions which should be seen as a red-flag when 
+downloading an extension - please get your chrome extensions from the official 
+google webstore and revise the permissions they require!
 
 [@tareqdandachi] developed the extension source and [@ashika-verma] developed the
 server where scraped data is stored.
