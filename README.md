@@ -1,31 +1,14 @@
-# 6.858 chrome extension oops
+# Malicious Chrome Extension
 
-## make server
-[@ashika-verma]
-https://hello.com/report-a-bug/string}
-so just report-a-bug/, save shit into database
+This was developed as a proof of concept for stealing cookies through a malicious
+chrome extension. Goal is to at random intervals after rest, query all cookies
+and send them unsuspiciously to a separate server where cookies of multiple
+users are installed.
 
-https://hello.com/SUPERSECRETKEY
-## check if localhost or nah (aka check if current device is lookin)
+[@tareqdandachi] developed the extension source and [@ashika-verma] developed the
+server where scraped data is stored.
 
-## setup base extension
-[@tareqdandachi]
-
-
-## read text boxes
-
-
-## steal cookies
-[@tareqdandachi]
-
-will begin working on print.mit.edu snooping cookie as a test.
-
-## duo
-
-
-## social engineering / mask extension
-
-## Getting on the chrome store
+## Potential ways of getting on the chrome store
 
 To pass security checks from google chrome store [pass manual and automatic checks]:
 
